@@ -6,6 +6,7 @@ mkdir bin\obj 2>nul
 :: --------------
 ::  config start
 :: --------------
+set debug=false
 set cleanup_after=true
 set app_name=persistency
 :: --------------
@@ -23,12 +24,17 @@ del *.exe       > NUL 2> NUL
 del *.pdb       > NUL 2> NUL
 del /Q obj\*.*  > NUL 2> NUL
 
+if %debug% == true (
+   set additional_flags=/Z7 /Zl
+) else (
+   set additional_flags=/Zl
+)
+
 :: compiling the program
-cl /nologo /Z7 /O1 /std:c++latest ^
+cl /nologo /O1 %additional_flags% /std:c++latest ^
    /Fo: obj\ /Fe: %app_name_pre_patch% ^
    ..\src\persistent_data\persistent_main.cpp ^
    ..\src\*.cpp /GS- /MP ^
-   /D_CRT_SECURE_NO_WARNINGS ^
    /link /NODEFAULTLIB /subsystem:windows /INCREMENTAL:NO /entry:persistent_main ^
    -PDB:%app_name%.pdb user32.lib kernel32.lib || exit /B 1
 

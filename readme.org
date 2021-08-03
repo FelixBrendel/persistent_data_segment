@@ -1,0 +1,16 @@
+#+TITLE: Persistent Data Segment
+* Overview
+ - Project template for a 64bit Windows executable
+ - Without C standard library (using only Windows functions)
+ - Therefore small executable size (4 kb)
+ - Across runs of the program, the contents of the variable =persistent_data=
+   are preserved in the executable
+ - The executable can be renamed or moved between runs without losing the data
+ - The struct =Peristent_Data= can easily be extended by adding new members
+
+* Limitations
+ - The =Peristent_Data= struct should have a size >= 8 bytes
+ - Data can only be written back if no other instance of the program is running
+ - If the program is being renamed or moved while it is running, the changes of
+   the =persistent_data= in this run will not be preserved (the executable will
+   contain the last saved version in this case)

@@ -1,7 +1,6 @@
 #include <windows.h>
 
-#pragma intrinsic(strcat,strlen)
-#pragma function(memset)
+#pragma intrinsic(strcat)
 
 #include "persistent_data.hpp"
 
